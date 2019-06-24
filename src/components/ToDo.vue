@@ -15,7 +15,7 @@
        {{ index + 1 }}. {{ tro }}
          <i  class = "fa fa-minus-circle" v-on:click="remove(index)">                    
         </i>
-      <input id="edit" type="text" v-bind:style="{visibility: clickToEdit}" v-on:mouseover="changeC2E(clickToEdit)"> 
+      <input id="edit" type="text" v-on:mouseover="clickToEdit = false" v-show="clickToEdit" > 
         
       </li>
 
@@ -40,17 +40,14 @@ export default {
   data() {
     return {
        
-      clickToEdit: 'visible',
+      clickToEdit: true,
       todo: '',
       todos: ["Finish this website", "Pizza Rotolo"],
       
     }
   }, 
   methods: {
-    changeC2E(clickToEdit){
-      this.clickToEdit.style.visibilty = hidden;
-
-    },
+    
     addToArray(todo) {
       
         if (todo.length >= 3) {
