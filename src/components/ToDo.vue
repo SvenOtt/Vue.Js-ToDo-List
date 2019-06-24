@@ -2,7 +2,7 @@
   <div class="hello">
   <div class="holder">
     <form @submit.prevent="addToArray(todo)">
-      <input type="text" placeholder="Enter a task for the day" v-model="todo" v-validate="'min:3'" name="todo">    
+      <input id="taskbox" type="text" placeholder="Enter a task for the day" v-model="todo" v-validate="'min:3'" name="todo">    
       <transition name="alert-in">
 
       <p class="alert" v-if="errors.has('todo')">{{errors.first('todo')}}</p>
@@ -11,11 +11,12 @@
    </form>
   
    <ul>
-      <li v-for="(tro, index) in todos" v-bind:key='index'>  
+      <li v-on:mouseover="clickToEdit = true"
+      v-on:mouseleave="clickToEdit = false" v-for="(tro, index) in todos" v-bind:key='index'>  
        {{ index + 1 }}. {{ tro }}
          <i  class = "fa fa-minus-circle" v-on:click="remove(index)">                    
         </i>
-      <input id="edit" type="text" v-on:mouseover="clickToEdit = false" v-show="clickToEdit" > 
+      <input id="edit" type="text" v-show="clickToEdit" > 
         
       </li>
 
@@ -40,7 +41,7 @@ export default {
   data() {
     return {
        
-      clickToEdit: true,
+      clickToEdit: false,
       todo: '',
       todos: ["Finish this website", "Pizza Rotolo"],
       
@@ -98,7 +99,7 @@ export default {
     margin-top: -20px;
   }
 
-  input {
+  #taskbox {
     width: calc(100% - 40px);
     border: 0;
     padding: 20px;
@@ -135,6 +136,17 @@ export default {
     font-size: 1.3em;
     background-color: #E0EDF4;
     border-left: 5px solid #3EB3F6;
+    margin-bottom: 2px;
+    color: #3E5252;
+  }
+
+  #edit
+  {
+    margin: 0;
+    padding: 0;
+    font-size: 1.3em;
+    background-color: #E0EDF4;
+    
     margin-bottom: 2px;
     color: #3E5252;
   }
