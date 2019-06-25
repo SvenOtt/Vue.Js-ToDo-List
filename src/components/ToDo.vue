@@ -13,7 +13,7 @@
    <ul>
       <li v-on:mouseover="clickToEdit = false" v-on:mouseleave="clickToEdit = false"
        v-for="(todo, index) in todos" v-bind:key='index'  v-on:click="toggleActive(todo)" >
-       {{ index + 1 }}. {{ todo }} 
+       {{ index + 1 }}. {{ todo.name }} 
 
          <i  class = "fa fa-minus-circle" v-on:click="remove(index)">                    
         </i>
@@ -46,8 +46,17 @@ export default {
       selected: false, 
       clickToEdit: false,
       todo: '',
-      todos: ["Finish this website", "Pizza Rotolo"],
-      
+      todos: [
+        {
+          name: 'Finish this website',
+          active: true
+          
+        },
+        {
+          name: 'Pizza Rotolo',
+          active: false
+        }
+      ]
       
     }
   }, 
