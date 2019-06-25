@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
   <div class="holder">
-    <form @submit.prevent="addToArray(todo)">
+    <form v-on:submit.prevent="addToArray(todo)">
       <input id="taskbox" type="text" placeholder="Enter a task for the day" v-model="todo" v-validate="'min:3'" name="todo">    
       <transition name="alert-in">
 
@@ -11,12 +11,15 @@
    </form>
   
    <ul>
-      <li v-on:mouseover="clickToEdit = true"
-      v-on:mouseleave="clickToEdit = false" v-for="(tro, index) in todos" v-bind:key='index'>  
-       {{ index + 1 }}. {{ tro }}
+      <li v-on:mouseover="clickToEdit = false" v-on:mouseleave="clickToEdit = false"
+       v-for="(todo, index) in todos" v-bind:key='index' v-bind:class="{ 'active': todo.active}" v-on:click="toggleActive(todo)" >
+       {{ index + 1 }}. {{ todo }}
+
          <i  class = "fa fa-minus-circle" v-on:click="remove(index)">                    
         </i>
-      <input id="edit" type="text" v-show="clickToEdit" > 
+
+      <input id="edit" type="text" 
+      v-show="clickToEdit" > 
         
       </li>
 
@@ -40,14 +43,24 @@ export default {
   name: 'ToDo',
   data() {
     return {
-       
+      selected: false, 
       clickToEdit: false,
       todo: '',
       todos: ["Finish this website", "Pizza Rotolo"],
       
+      
     }
   }, 
   methods: {
+    toggleActive: function(s){
+            s.active = !s.active;
+    },
+    select(todo) {
+      selected = true;
+    },
+    checkInd(indvar) {
+      
+    },
     
     addToArray(todo) {
       
@@ -55,6 +68,7 @@ export default {
           this.todos.push(todo);
           this.todo = "";
         } else {
+          
           console.log('Not valid');
         
       }
@@ -78,6 +92,9 @@ export default {
     },
       
       },
+      checkout(){
+        console.log(selected);
+      }
     }  
   
 </script>
@@ -146,7 +163,6 @@ export default {
     padding: 0;
     font-size: 1.3em;
     background-color: #E0EDF4;
-    
     margin-bottom: 2px;
     color: #3E5252;
   }
@@ -170,6 +186,9 @@ export default {
   }
   .alert-in-leave-active {
     animation: bounce-in .5s reverse;
+  }
+  form ul li.active{
+    background-color:#8ec16d;
   }
 
   @keyframes bounce-in {
