@@ -12,8 +12,8 @@
   
    <ul>
       <li v-on:mouseover="clickToEdit = false" v-on:mouseleave="clickToEdit = false"
-       v-for="(todo, index) in todos" v-bind:key='index' v-bind:class="{ 'active': todo.active}" v-on:click="toggleActive(todo)" >
-       {{ index + 1 }}. {{ todo }}
+       v-for="(todo, index) in todos" v-bind:key='index'  v-on:click="toggleActive(todo)" >
+       {{ index + 1 }}. {{ todo }} 
 
          <i  class = "fa fa-minus-circle" v-on:click="remove(index)">                    
         </i>
@@ -187,9 +187,7 @@ export default {
   .alert-in-leave-active {
     animation: bounce-in .5s reverse;
   }
-  form ul li.active{
-    background-color:#8ec16d;
-  }
+  
 
   @keyframes bounce-in {
     0% {
