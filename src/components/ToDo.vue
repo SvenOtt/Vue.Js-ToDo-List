@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
   <div class="holder">
-    <form v-on:submit.prevent="addToArray(todo)">
+    <form v-on:submit.prevent="addToArray(newItem, todo)">
       <input id="taskbox" type="text" placeholder="Enter a task for the day" v-model="todo" v-validate="'min:3'" name="todo">    
       <transition name="alert-in">
 
@@ -40,12 +40,18 @@
 <script>
 
 export default {
-  name: 'ToDo',
+  
   data() {
     return {
       selected: false, 
       clickToEdit: false,
       todo: '',
+
+      newItem: {
+        name: 4444,
+        active: true
+      },
+      
       todos: [
         {
           name: 'Finish this website',
@@ -64,17 +70,12 @@ export default {
     toggleActive: function(s){
             s.active = !s.active;
     },
-    select(todo) {
-      selected = true;
-    },
-    checkInd(indvar) {
-      
-    },
     
-    addToArray(todo) {
+    addToArray(newItem, todo) {
       
         if (todo.length >= 3) {
-          this.todos.push(todo);
+          newItem.name = todo;
+          this.todos.push(newItem);
           this.todo = "";
         } else {
           
