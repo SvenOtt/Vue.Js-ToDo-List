@@ -12,8 +12,8 @@
   
    <ul>
       <li v-on:mouseover="clickToEdit = false" v-on:mouseleave="clickToEdit = false"
-       v-for="(todo, index) in todos" v-bind:key='index'  v-on:click="toggleActive(todo)" >
-       {{ index + 1 }}. {{ todo.name }} 
+       v-for="(task, index) in todos" v-bind:key='index'  v-on:click="toggleActive(todos)" v-bind:class="{ 'active': task.active}">
+       {{ index + 1 }}. {{ task.name }} 
 
          <i  class = "fa fa-minus-circle" v-on:click="remove(index)">                    
         </i>
@@ -64,8 +64,14 @@ export default {
     }
   }, 
   methods: {
-    toggleActive: function(s){
-            s.active = !s.active;
+    toggleActive(todos) {
+            event.target.active = !event.target.active;
+            if (event.target.active === true){
+              console.log ('is active');
+            }
+            else {
+              console.log ('is not active');
+            }
     },
     
     addToArray(todo) {
