@@ -1,220 +1,218 @@
 <template>
   <div class="hello">
-  <div class="holder">
-    <form v-on:submit.prevent="addToArray(todo)">
-      <input id="taskbox" type="text" placeholder="Enter a task for the day" v-model="todo" v-validate="'min:3'" name="todo">    
-      <transition name="alert-in">
+    <div class="holder">
+      <form v-on:submit.prevent="addToArray(todo)">
+        <input
+          id="taskbox"
+          type="text"
+          placeholder="Enter a task for the day"
+          v-model="todo"
+          v-validate="'min:3'"
+          name="todo"
+        >
+        <transition name="alert-in">
+          <p class="alert" v-if="errors.has('todo')">{{errors.first('todo')}}</p>
+        </transition>
+      </form>
 
-      <p class="alert" v-if="errors.has('todo')">{{errors.first('todo')}}</p>
-      </transition>
+      <ul>
+        <li v-for="(task, index) in todos" v-bind:key="index">
+          <label v-on:click="toggleActive(task)">{{ index + 1 }}. {{ task.name }}</label>
 
-   </form>
-  
-   <ul>
-      <li v-on:mouseover="clickToEdit = false" v-on:mouseleave="clickToEdit = false"
-       v-for="(task, index) in todos" v-bind:key='index'  v-on:click="toggleActive(todos)" v-bind:class="{ 'active': task.active}">
-       {{ index + 1 }}. {{ task.name }} 
+          <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
 
-         <i  class = "fa fa-minus-circle" v-on:click="remove(index)">                    
-        </i>
+          <input
+            id="edit"
+            type="text"
+            v-show="task.clickToEdit"
+            v-model="task.name"
+            v-on:submit.prevent="toggleInactive(task)"
+          >
+        </li>
 
-      <input id="edit" type="text" 
-      v-show="clickToEdit" > 
-        
-      </li>
+        <button @click="clear()">Clear List</button>
 
-   <button @click="clear()">Clear List</button>
-   
-
-  <p v-if="isEmpty">You have things to do!</p>
-  <p v-else>You have nothing to do.</p>
-
-</ul>
-
-</div>
+        <p v-if="isEmpty">You have things to do!</p>
+        <p v-else>You have nothing to do.</p>
+      </ul>
+    </div>
   </div>
-    
 </template>
 
 
 <script>
-
 export default {
-  
+  name: "ToDo",
   data() {
     return {
-      selected: false, 
-      clickToEdit: false,
-      todo: '',
+      selected: false,
+      todo: "",
+      globaleClick: false,
 
-      
-      
       todos: [
         {
-          name: 'Finish this website',
-          active: true
-          
+          name: "Finish this website",
+          active: true,
+          clickToEdit: false
         },
         {
-          name: 'Pizza Rotolo',
-          active: false
+          name: "Pizza Rotolo",
+          active: false,
+          clickToEdit: false
         }
       ]
-      
-    }
-  }, 
+    };
+  },
   methods: {
-    toggleActive(todos) {
-            event.target.active = !event.target.active;
-            if (event.target.active === true){
-              console.log ('is active');
-            }
-            else {
-              console.log ('is not active');
-            }
+    toggleActive(task) {
+      console.log(task);
+      task.clickToEdit = true;
     },
-    
+
+    toggleInactive(task) {
+      task.clickToEdit = false;
+    },
+
     addToArray(todo) {
-      
-        if (todo.length >= 3) {
-          let newTodo = {
-            name: todo,
-            active: false
-          }
-          this.todos.push(newTodo);
-          this.todo = '';
-        } else {
-          
-          console.log('Not valid');
-        
+      if (todo.length >= 3) {
+        let newTodo = {
+          name: todo,
+          active: false
+        };
+        this.todos.push(newTodo);
+        this.todo = "";
+      } else {
+        console.log("Not valid");
       }
-      
-    
-      },
+    },
     clear() {
       this.todos = [];
     },
     remove(id) {
-      this.todos.splice(id,1);
-    
+      this.todos.splice(id, 1);
     }
-    },
+  },
   computed: {
-    isEmpty: {
-      get: function()
-      {
-        return this.todos.length > 0;
-      }
+    /*isActive: {
+      toggleActive(todos) {
+            event.target.active = !event.target.active;
+            if (event.target.active === true){
+              console.log ('is active');
+            }
+            else if (event.target.active === false){
+              console.log ('is inactive')
+            }
+            
+            else {
+              console.log ('is undefined');
+            }
     },
       
-      },
-      checkout(){
-        console.log(selected);
+
+    },*/
+
+    isEmpty: {
+      get: function() {
+        return this.todos.length > 0;
       }
-    }  
-  
+    }
+  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 
 .holder {
-    background: #fff;
-  }
+  background: #fff;
+}
 
-  .alert {
-    background: #fdf2ce;
-    font-weight: bold;
-    display: inline-block;
-    padding: 5px;
-    margin-top: -20px;
-  }
+.alert {
+  background: #fdf2ce;
+  font-weight: bold;
+  display: inline-block;
+  padding: 5px;
+  margin-top: -20px;
+}
 
-  #taskbox {
-    width: calc(100% - 40px);
-    border: 0;
-    padding: 20px;
-    font-size: 1.3em;
-    background-color: #323333;
-    color: #687F7F;
-  }
+#taskbox {
+  width: calc(100% - 40px);
+  border: 0;
+  padding: 20px;
+  font-size: 1.3em;
+  background-color: #323333;
+  color: #687f7f;
+}
 .holder {
   display: flex;
   justify-content: center;
   align-items: left;
   align-content: center;
   flex-direction: column;
-  
 }
-  button {
-    width: calc(60 - 40px);
-    border: 0;
-    padding: 20px;
-    font-size: 1.3em;
-    background-color: #d3e7e771;
-    color: #687F7F;
-    margin: auto;
-    
-  }
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
-  
-  ul li {
-    padding: 20px;
-    font-size: 1.3em;
-    background-color: #E0EDF4;
-    border-left: 5px solid #3EB3F6;
-    margin-bottom: 2px;
-    color: #3E5252;
-  }
+button {
+  width: calc(60 - 40px);
+  border: 0;
+  padding: 20px;
+  font-size: 1.3em;
+  background-color: #d3e7e771;
+  color: #687f7f;
+  margin: auto;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 
-  #edit
-  {
-    margin: 0;
-    padding: 0;
-    font-size: 1.3em;
-    background-color: #E0EDF4;
-    margin-bottom: 2px;
-    color: #3E5252;
-  }
+ul li {
+  padding: 20px;
+  font-size: 1.3em;
+  background-color: #e0edf4;
+  border-left: 5px solid #3eb3f6;
+  margin-bottom: 2px;
+  color: #3e5252;
+}
 
-  p {
-    text-align:center;
-    padding: 30px 0;
-    color: gray;
-  }
+#edit {
+  margin: 0;
+  padding: 0;
+  font-size: 1.3em;
+  background-color: #e0edf4;
+  margin-bottom: 2px;
+  color: #3e5252;
+}
 
-  .container {
-    box-shadow: 0px 0px 40px lightgray;
-  }
-  i{
-    float: right;
-  }
+p {
+  text-align: center;
+  padding: 30px 0;
+  color: gray;
+}
 
-  .alert-in-enter-active {
-    animation: bounce-in .5s
+.container {
+  box-shadow: 0px 0px 40px lightgray;
+}
+i {
+  float: right;
+}
 
-  }
-  .alert-in-leave-active {
-    animation: bounce-in .5s reverse;
-  }
-  
+.alert-in-enter-active {
+  animation: bounce-in 0.5s;
+}
+.alert-in-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
 
-  @keyframes bounce-in {
-    0% {
-      transform: scale(0);
-    }
-    50% {
-      transform: scale(1.2);
-    }
-    100% {
-      transform: scale(1);
-    }
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
   }
-
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>
