@@ -22,7 +22,7 @@
           leave-active-class="animated bounceOutDown"
         >
           <li v-for="(task, index) in todos" v-bind:key="index" style="position:relative;">
-            <label v-on:click="toggleActive(task)">{{ index + 1 }}. {{ task.name }}</label>
+            <label v-on:click="toggleActive(task)" v-show="!task.clickToEdit">{{ index + 1 }}. {{ task.name }}</label>
 
             <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
             <form
@@ -55,11 +55,13 @@ export default {
       todos: [
         {
           name: "Finish this website",
-          clickToEdit: false
+          clickToEdit: false,
+          editBoxSize: 10
         },
         {
           name: "Pizza Rotolo",
-          clickToEdit: false
+          clickToEdit: false,
+          editBoxSize: 10
         },
         {
           name:
@@ -84,7 +86,8 @@ export default {
       if (todo.length >= 3) {
         let newTodo = {
           name: todo,
-          clickToEdit: false
+          clickToEdit: false,
+          editBoxSize: 10
         };
         this.todos.push(newTodo);
         this.todo = "";
