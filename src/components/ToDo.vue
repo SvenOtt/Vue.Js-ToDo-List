@@ -19,21 +19,19 @@
         <li v-for="(task, index) in todos" v-bind:key="index" style="position:relative;">
           <label
             
-            v-on:mouseover="toggleActive(task)"
-            v-on:mouseleave="toggleInactive(task)"
-          >{{ task.name }}</label>
+            v-on:click="toggleActive(task)"
+          >{{ index + 1 }}. {{ task.name }}</label>
 
           <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
           <form
             v-on:submit.prevent="toggleInactive(task)"
-            style="position:absolute; top:1em; left:0;"
+            style="position:absolute; top:0.5em; left:0.5em;"
           >
             <input
               id="edit"
               type="text"
               v-show="task.clickToEdit"
               v-model="task.name"
-              v-on:submit.prevent="toggleInactive(task)"
             >
           </form>
         </li>
@@ -73,12 +71,12 @@ export default {
   },
   methods: {
     toggleActive(task) {
-      // console.log(task);
+       console.log("click registers");
       task.clickToEdit = true;
     },
 
     toggleInactive(task) {
-      // console.log("submit registers");
+       console.log("submit registers");
       task.clickToEdit = false;
     },
 
@@ -86,7 +84,7 @@ export default {
       if (todo.length >= 3) {
         let newTodo = {
           name: todo,
-          active: false
+          clickToEdit: false
         };
         this.todos.push(newTodo);
         this.todo = "";
@@ -192,7 +190,8 @@ ul li {
   background-color: #e0edf4;
   margin-bottom: 2px;
   color: #3e5252;
-  border: none;
+  border-style:solid;
+  border-color:lightgray
 }
 
 p {
