@@ -16,18 +16,26 @@
       </form>
 
       <ul>
-        <li v-for="(task, index) in todos" v-bind:key="index">
-          <label v-on:click="toggleActive(task)">{{ index + 1 }}. {{ task.name }}</label>
+        <li v-for="(task, index) in todos" v-bind:key="index" style="position:relative;">
+          <label
+            
+            v-on:mouseover="toggleActive(task)"
+            v-on:mouseleave="toggleInactive(task)"
+          >{{ task.name }}</label>
 
           <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
-
-          <input
-            id="edit"
-            type="text"
-            v-show="task.clickToEdit"
-            v-model="task.name"
+          <form
             v-on:submit.prevent="toggleInactive(task)"
+            style="position:absolute; top:1em; left:0;"
           >
+            <input
+              id="edit"
+              type="text"
+              v-show="task.clickToEdit"
+              v-model="task.name"
+              v-on:submit.prevent="toggleInactive(task)"
+            >
+          </form>
         </li>
 
         <button @click="clear()">Clear List</button>
@@ -65,11 +73,12 @@ export default {
   },
   methods: {
     toggleActive(task) {
-      console.log(task);
+      // console.log(task);
       task.clickToEdit = true;
     },
 
     toggleInactive(task) {
+      // console.log("submit registers");
       task.clickToEdit = false;
     },
 
@@ -178,10 +187,12 @@ ul li {
 #edit {
   margin: 0;
   padding: 0;
+  font-family: "Montserrat";
   font-size: 1.3em;
   background-color: #e0edf4;
   margin-bottom: 2px;
   color: #3e5252;
+  border: none;
 }
 
 p {
