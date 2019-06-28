@@ -16,26 +16,28 @@
       </form>
 
       <ul>
-        <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
-        <li v-for="(task, index) in todos" v-bind:key="index" style="position:relative;">
-          <label v-on:click="toggleActive(task)">{{ index + 1 }}. {{ task.name }}</label>
+        <transition-group
+          name="list"
+          enter-active-class="animated bounceInUp"
+          leave-active-class="animated bounceOutDown"
+        >
+          <li v-for="(task, index) in todos" v-bind:key="index" style="position:relative;">
+            <label v-on:click="toggleActive(task)">{{ index + 1 }}. {{ task.name }}</label>
 
-          <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
-          <form
-            v-on:submit.prevent="toggleInactive(task)"
-            style="position:absolute; top:0.5em; left:0.5em;"
-          >
-            <input id="edit" type="text" v-show="task.clickToEdit" v-model="task.name">
-          </form>
-        </li>
-</transition-group>
+            <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
+            <form
+              v-on:submit.prevent="toggleInactive(task)"
+              style="position:absolute; top:0.5em; left:0.5em;"
+            >
+              <input id="edit" type="text" v-show="task.clickToEdit" v-model="task.name">
+            </form>
+          </li>
+        </transition-group>
         <button @click="clear()">Clear List</button>
 
         <p v-if="isEmpty">You have things to do!</p>
         <p v-else>You have nothing to do.</p>
-        
       </ul>
-
     </div>
   </div>
 </template>
@@ -57,6 +59,11 @@ export default {
         },
         {
           name: "Pizza Rotolo",
+          clickToEdit: false
+        },
+        {
+          name:
+            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
           clickToEdit: false
         }
       ]
