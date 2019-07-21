@@ -1,44 +1,45 @@
 <template>
-  <div class="hello">
-    <div class="holder">
-      <form v-on:submit.prevent="addToArray(todo)">
-        <input
-          id="taskbox"
-          type="text"
-          placeholder="Enter a task for the day"
-          v-model="todo"
-          v-validate="'min:3'"
-          name="todo"
-        >
-        <transition enter-active-class="animated flipInX" leave-active-class="animated flipOutX">
-          <p class="alert" v-if="errors.has('todo')">{{errors.first('todo')}}</p>
-        </transition>
-      </form>
+  <div class="holder">
+    <form v-on:submit.prevent="addToArray(todo)">
+      <input
+        id="taskbox"
+        type="text"
+        placeholder="Enter a task for the day"
+        v-model="todo"
+        v-validate="'min:3'"
+        name="todo"
+      />
+      <transition enter-active-class="animated flipInX" leave-active-class="animated flipOutX">
+        <p class="alert" v-if="errors.has('todo')">{{errors.first('todo')}}</p>
+      </transition>
+    </form>
 
-      <ul>
-        <transition-group
-          name="list"
-          enter-active-class="animated bounceInUp"
-          leave-active-class="animated bounceOutDown"
-        >
-          <li v-for="(task, index) in todos" v-bind:key="index" style="position:relative;">
-            <label v-on:click="toggleActive(task)" v-show="!task.clickToEdit">{{ index + 1 }}. {{ task.name }}</label>
+    <ul>
+      <transition-group
+        name="list"
+        enter-active-class="animated bounceInUp"
+        leave-active-class="animated bounceOutDown"
+      >
+        <li v-for="(task, index) in todos" v-bind:key="index" style="position:relative;">
+          <label
+            v-on:click="toggleActive(task)"
+            v-show="!task.clickToEdit"
+          >{{ index + 1 }}. {{ task.name }}</label>
 
-            <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
-            <form
-              v-on:submit.prevent="toggleInactive(task)"
-              style="position:absolute; top:0.5em; left:0.5em;"
-            >
-              <input id="edit" type="text" v-show="task.clickToEdit" v-model="task.name">
-            </form>
-          </li>
-        </transition-group>
-        <button @click="clear()">Clear List</button>
+          <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
+          <form
+            v-on:submit.prevent="toggleInactive(task)"
+            style="position:absolute; top:0.1em; left:0.1em;"
+          >
+            <input id="edit" type="text" v-show="task.clickToEdit" v-model="task.name" />
+          </form>
+        </li>
+      </transition-group>
+      <button @click="clear()">Clear List</button>
 
-        <p v-if="isEmpty">You have things to do!</p>
-        <p v-else>You have nothing to do.</p>
-      </ul>
-    </div>
+      <p v-if="isEmpty">You have things to do!</p>
+      <p v-else>You have nothing to do.</p>
+    </ul>
   </div>
 </template>
 
@@ -54,20 +55,16 @@ export default {
 
       todos: [
         {
-          name: "Finish this website",
+          name: "Test this webapp",
           clickToEdit: false,
-          editBoxSize: 10
+          
         },
         {
-          name: "Pizza Rotolo",
+          name: "Get a coffee",
           clickToEdit: false,
-          editBoxSize: 10
+          
         },
-        {
-          name:
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-          clickToEdit: false
-        }
+        
       ]
     };
   },
@@ -103,23 +100,7 @@ export default {
     }
   },
   computed: {
-    /*isActive: {
-      toggleActive(todos) {
-            event.target.active = !event.target.active;
-            if (event.target.active === true){
-              console.log ('is active');
-            }
-            else if (event.target.active === false){
-              console.log ('is inactive')
-            }
-            
-            else {
-              console.log ('is undefined');
-            }
-    },
-      
-
-    },*/
+    
 
     isEmpty: {
       get: function() {
@@ -130,11 +111,15 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
 @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
 
+body {
+  background-color: linear-gradient(black, #000099, #66c2ff, #ffcccc, #ffeee6);
+  color: linear-gradient(black, #000099, #66c2ff, #ffcccc, #ffeee6);
+}
 .holder {
   background: #fff;
 }
@@ -205,7 +190,7 @@ p {
 }
 
 .container {
-  box-shadow: 0px 0px 40px lightgray;
+  box-shadow: 0px 0px 40px rgb(14, 0, 0);
 }
 i {
   float: right;

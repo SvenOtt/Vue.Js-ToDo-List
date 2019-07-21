@@ -2,7 +2,7 @@
   <div id="app">
     
     <ToDo />
-  </div>
+  </div> 
 </template>
 
 <script>
@@ -20,7 +20,7 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 
 body {
-  background-color: #EEEEEE;
+  background: linear-gradient(black, #000099, #66c2ff, #ffcccc, #ffeee6);;
   font-family: 'Montserrat', sans-serif;
   display: grid;
   grid-template-rows: auto;
